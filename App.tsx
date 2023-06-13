@@ -21,21 +21,22 @@ function App() {
 
   ]);
 
+// the X button removes all selected tags and puts them back into not selected
   const removeTags = () => {
     setNotSelectedTags((prevTags) => [...prevTags, ...selectedTags]);
     setSelectedTags([]);
   };
 
+// sets text entered by a user as a searchText
   const filterTags = (text: string) => {
     setSearchText(text);
   };
-  
-  useEffect(() => {
-  }, [savedTags]);
 
+// makes a list of suggested tags based on what user writes in the input
   const availableTags = notSelectedTags.filter((tag) => tag.startsWith(searchText));
 
-  const toggleTag = (tag: string) => {
+// enables user to select and deselect a tag by clicking on it
+  const clickTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
       setNotSelectedTags([...notSelectedTags, tag]);
@@ -45,6 +46,7 @@ function App() {
     }
   };
 
+// enables user to add their own, new tag
   const addNewTag = () => {
     if (searchText && !selectedTags.includes(searchText)) {
       setSelectedTags([...selectedTags, searchText]);
@@ -52,12 +54,13 @@ function App() {
     }
   };
 
-  // shows all tags saved by a user
+// puts selected tags into saved tags
   const saveTags = () => {
     setSavedTags([...savedTags, ...selectedTags]);
     setSelectedTags([]);
   };
 
+// displays an alert that shows all already saved tags
   useEffect(() => {
     if (savedTags.length > 0) {
       Alert.alert('Saved Tags', savedTags.join(', '));
@@ -104,7 +107,7 @@ function App() {
             <Text
               key={item}
               style={styles.tag}
-              onPress={() => toggleTag(item)}
+              onPress={() => clickTag(item)}
             >
               <FontAwesome style={styles.icon1} name="close" size={20} color="#999999"/>
               {item}
@@ -113,13 +116,13 @@ function App() {
         </View>
 
         <View>
-          <Text style={styles.text2}>Add suggested tags</Text>
+          <Text style={styles.text2}>Add suggested tags:</Text>
             <View style={styles.tagcontainer}>
               {availableTags.map((item) => (
                 <Text
                   key={item}
                   style={styles.tag}
-                  onPress={() => toggleTag(item)}
+                  onPress={() => clickTag(item)}
                 >
                   {item}
                 </Text>
