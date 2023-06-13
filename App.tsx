@@ -98,7 +98,7 @@ function App() {
         ) : null}
 
       <View style={styles.bottomview}>
-        <Text style={styles.text2}>Selected Tags:</Text>
+        <Text style={styles.text2}>Selected tags:</Text>
         <View style={styles.tagcontainer}>
           {selectedTags.map((item) => (
             <Text
